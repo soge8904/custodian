@@ -48,7 +48,8 @@ class JDFTxJob(Job):
         -------
             (subprocess.Popen) Used for monitoring.
         """
-        cmd = self.jdftx_cmd + " -i " + self.input_file + " -o " + self.output_file
+        srun_cmd = f"srun --overlap --mpi=pmi2 {self.jdftx_cmd}"
+        cmd = f"{srun_cmd} -i {self.input_file} -o {self.output_file}"
         logger.info(f"Running {cmd}")
         with (
             open(os.path.join(directory, self.output_file), "w") as f_std,
@@ -56,7 +57,7 @@ class JDFTxJob(Job):
         ):
             # use line buffering for stderr
             return subprocess.run(
-                shlex.split(cmd),
+                cmd,
                 cwd=directory,
                 stdout=f_std,
                 stderr=f_err,

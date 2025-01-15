@@ -60,7 +60,7 @@ class JDFTxJob(Job):
                 cwd=directory,
                 stdout=f_std,
                 stderr=f_err,
-                shell=False,
+                shell=True,
                 check=False,
             )
 

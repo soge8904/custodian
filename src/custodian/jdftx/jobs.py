@@ -48,7 +48,8 @@ class JDFTxJob(Job):
         -------
             (subprocess.Popen) Used for monitoring.
         """
-        srun_cmd = f"srun -n 4 -G 4 --mem=0 --overlap --mpi=pmi2 {self.jdftx_cmd}"
+        # srun_cmd = f"srun -n 4 -G 4 --mem=0 --overlap --mpi=pmi2 {self.jdftx_cmd}"
+        srun_cmd = f"srun -n 1 -G 1 {self.jdftx_cmd}"
         cmd = f"{srun_cmd} -i {self.input_file} -o {self.output_file}"
         logger.info(f"Running {cmd}")
         with (
